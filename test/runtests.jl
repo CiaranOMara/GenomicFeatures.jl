@@ -440,5 +440,8 @@ end
     iter4 = eachoverlap(ic_a, ic_b)
     @test collect(iter1) == collect(iter2) == collect(iter3) == collect(iter4)
 
+    # Coverage.
+    @test collect(coverage(col_gatc)) == [GenomicInterval{UInt32}("test1",1,12,'.',1)] #TODO: relax Number comparisons.
+
 end #testset "Custom Concrete Types"
 end #testset GenomicFeatures
