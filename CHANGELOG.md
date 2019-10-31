@@ -8,6 +8,27 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - BioJulia registry.
 
+### Added
+- Support for julia v1.1 and v1.2.
+- Autodocs for public functions.
+- New `AbstractGenomicInterval` type.
+- New `GenomicPosition` type.
+- Support for `AbstractGenomicInterval` types in `GenomicIntervalCollection`.
+
+### Changed
+- Migrated from BioCore to [BioGenerics](https://github.com/BioJulia/BioGenerics.jl/tree/v0.1.0).
+- Renamed `Interval` to `GenomicInterval` and made it a subtype of `AbstractGenomicInterval`.
+- Renamed `IntervalCollection` to `GenomicIntervalCollection`.
+
+### Removed
+- :exclamation: BED module was moved to [BED.jl](https://github.com/BioJulia/BED.jl).
+- :exclamation: BigBed module was moved to [BigBed.jl](https://github.com/BioJulia/BigBed.jl).
+- :exclamation: BigWig module was moved to [BigWig.jl](https://github.com/BioJulia/BigWig.jl).
+- :exclamation: GFF3 module was moved to [GFF3.jl](https://github.com/BioJulia/GFF3.jl).
+- :exclamation: Indexes module was moved to [Indexes.jl](https://github.com/BioJulia/Indexes.jl).
+- :exclamation: BBI module was moved to [BBI.jl](https://github.com/BioJulia/BBI.jl).
+- :exclamation: Support for julia v0.7 and v1.0 has been dropped.
+
 ## [2.0.0] - 2020-01-
 
 ### Changed
