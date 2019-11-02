@@ -51,15 +51,17 @@ mutable struct GenomicIntervalCollection{I}
     ordered_trees::Vector{ICTree{I}}
     ordered_trees_outdated::Bool
 
+    # Shorthand constructor.
     function GenomicIntervalCollection{T}() where T
         return GenomicIntervalCollection{GenomicInterval{T}}()
     end
 
+    # Longhand constructor.
     function GenomicIntervalCollection{I}() where {T,I<:AbstractGenomicInterval{T}}
         return new{I}(Dict{String,ICTree{I}}(), 0, ICTree{I}[], false)
     end
 
-    # Bulk insertion
+    # Bulk insertion.
     function GenomicIntervalCollection{I}(intervals::AbstractVector{I}, sort::Bool=false) where {T,I<:AbstractGenomicInterval{T}}
         if sort
             sort!(intervals)
@@ -84,7 +86,7 @@ mutable struct GenomicIntervalCollection{I}
     end
 end
 
-# Shorthand constructor.
+# Shorthand bulk insertion.
 function GenomicIntervalCollection(intervals::AbstractVector{I}, sort::Bool=false) where {T,I<:AbstractGenomicInterval{T}}
     return GenomicIntervalCollection{I}(intervals, sort)
 end
