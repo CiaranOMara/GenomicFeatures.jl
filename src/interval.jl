@@ -121,12 +121,19 @@ Check if two intervals are well ordered.
 AbstractGenomicIntervals are considered well ordered if seqname(a) <= seqname(b)nd and leftposition(a) <= leftposition(b).
 """
 function isordered(a::AbstractGenomicInterval{T}, b::AbstractGenomicInterval{T}, seqname_isless::Function=isless) where T
-    if seqname(a) != seqname(b)
-        return seqname_isless(seqname(a), seqname(b))
+
+    a_seqname = seqname(a)
+    b_seqname = seqname(b)
+
+    if a_seqname != b_seqname
+        return seqname_isless(a_seqname, b_seqname)
     end
 
-    if leftposition(a) != leftposition(b)
-        return leftposition(a) < leftposition(b)
+    a_leftposition = leftposition(a)
+    b_leftposition = leftposition(b)
+
+    if a_leftposition != b_leftposition
+        return a_leftposition < b_leftposition
     end
 
     return true
