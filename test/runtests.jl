@@ -192,6 +192,9 @@ end
 
     @testset "Constructor" begin
         @test GenomicIntervalCollection{Int}() == GenomicIntervalCollection{GenomicInterval{Int}}()
+
+        intervals = [GenomicInterval("test", 1, 2)]
+        @test GenomicIntervalCollection{Nothing}(intervals) == GenomicIntervalCollection{GenomicInterval{Nothing}}(intervals)
     end
 
     @testset "Insertion/Iteration" begin
