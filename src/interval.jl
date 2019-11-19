@@ -73,7 +73,7 @@ end
 IntervalTrees.first(i::AbstractGenomicInterval) = leftposition(i)
 IntervalTrees.last(i::AbstractGenomicInterval) = rightposition(i)
 
-function Base.isless(a::AbstractGenomicInterval{T}, b::AbstractGenomicInterval{T}, seqname_isless::Function=isless) where T
+function Base.isless(a::AbstractGenomicInterval, b::AbstractGenomicInterval, seqname_isless::Function=isless)
 
     a_seqname = seqname(a)
     b_seqname = seqname(b)
@@ -99,7 +99,7 @@ function Base.isless(a::AbstractGenomicInterval{T}, b::AbstractGenomicInterval{T
     return false
 end
 
-function Base.isless(a::GenomicInterval{T}, b::GenomicInterval{T}, seqname_isless::Function=isless) where T
+function Base.isless(a::GenomicInterval, b::GenomicInterval, seqname_isless::Function=isless)
     if a.seqname != b.seqname
         return seqname_isless(a.seqname, b.seqname)::Bool
     end
@@ -124,7 +124,7 @@ Check if two intervals are well ordered.
 
 AbstractGenomicIntervals are considered well ordered if seqname(a) <= seqname(b)nd and leftposition(a) <= leftposition(b).
 """
-function isordered(a::AbstractGenomicInterval{T}, b::AbstractGenomicInterval{T}, seqname_isless::Function=isless) where T
+function isordered(a::AbstractGenomicInterval, b::AbstractGenomicInterval, seqname_isless::Function=isless)
 
     a_seqname = seqname(a)
     b_seqname = seqname(b)
@@ -146,7 +146,7 @@ end
 """
 Return true if interval `a` entirely precedes `b`.
 """
-function precedes(a::AbstractGenomicInterval{T}, b::AbstractGenomicInterval{T}, seqname_isless::Function=isless) where T
+function precedes(a::AbstractGenomicInterval, b::AbstractGenomicInterval, seqname_isless::Function=isless)
     return (rightposition(a) < leftposition(b) && seqname(a) == seqname(b)) || seqname_isless(seqname(a), seqname(b))
 end
 
@@ -166,7 +166,7 @@ function Base.:(==)(a::GenomicInterval{T}, b::GenomicInterval{T}) where T
 end
 
 "Return true if interval `a` overlaps interval `b`, with no consideration to strand"
-function BioGenerics.isoverlapping(a::AbstractGenomicInterval{S}, b::AbstractGenomicInterval{T}) where {S, T}
+function BioGenerics.isoverlapping(a::AbstractGenomicInterval, b::AbstractGenomicInterval)
     return leftposition(a) <= rightposition(b) &&
            leftposition(b) <= rightposition(a) &&
            seqname(a)      == seqname(b)
@@ -205,7 +205,7 @@ function metadatatype(x::Any)
     return metadatatype(typeof(x))
 end
 
-function _metadatatype(::Type{A}) where {T, A <: AbstractGenomicInterval{T}}
+function _metadatatype(::Type{<:AbstractGenomicInterval{T}}) where T
     return T
 end
 
