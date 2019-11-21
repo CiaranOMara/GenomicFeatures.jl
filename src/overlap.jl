@@ -85,8 +85,7 @@ function Base.iterate(iter::OverlapIterator{A,B,F,G}, state::OverlapIteratorStat
         return nothing
     end
 
-    entry_a, state_a = next_a
-    interval_a = typeof(entry_a) <: Ea ? entry_a : convert(Ea, entry_a) #TODO: handle conversion elsewhere.
+    interval_a, state_a = next_a
 
     while true
         if queue_index > lastindex(state.queue)
@@ -97,14 +96,12 @@ function Base.iterate(iter::OverlapIterator{A,B,F,G}, state::OverlapIteratorStat
                     return break
                 end
 
-                entry_a, state_a = next_a
-                next_interval_a = typeof(entry_a) <: Ea ? entry_a : convert(Ea, entry_a) #TODO: handle conversion elsewhere.
+                next_interval_a, state_a = next_a
                 check_ordered(interval_a, next_interval_a, iter.isless)
                 interval_a = next_interval_a
                 queue_index = firstindex(state.queue)
             else
-                entry_b, state_b = next_b
-                interval_b = typeof(entry_b) <: Eb ? entry_b : convert(Eb, entry_b) #TODO: handle conversion elsewhere.
+                interval_b, state_b = next_b
                 if !isempty(queue)
                     check_ordered(queue[end], interval_b, iter.isless)
                 end
@@ -112,8 +109,7 @@ function Base.iterate(iter::OverlapIterator{A,B,F,G}, state::OverlapIteratorStat
                 next_b = iterate(iter.intervals_b, state_b)
             end
         else
-            entry_a, state_a = next_a
-            interval_a = typeof(entry_a) <: Ea ? entry_a : convert(Ea, entry_a) #TODO: handle conversion elsewhere.
+            interval_a, state_a = next_a
             interval_b = queue[queue_index]
             c = compare_overlap(interval_a, interval_b, iter.isless)
             queue_index += 1
@@ -124,8 +120,7 @@ function Base.iterate(iter::OverlapIterator{A,B,F,G}, state::OverlapIteratorStat
                 if next_a === nothing
                     break
                 end
-                entry_a, state_a = next_a
-                next_interval_a = typeof(entry_a) <: Ea ? entry_a : convert(Ea, entry_a) #TODO: handle conversion elsewhere.
+                next_interval_a, state_a = next_a
 
                 check_ordered(interval_a, next_interval_a, iter.isless)
                 interval_a = next_interval_a
