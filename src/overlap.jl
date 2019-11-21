@@ -35,7 +35,7 @@ function eachoverlap(intervals_a, intervals_b, seqname_isless=Base.isless; filte
     return OverlapIterator(intervals_a, intervals_b, seqname_isless, filter)
 end
 
-struct OverlapIteratorState{Na,Nb,Ea,Eb}
+struct OverlapIteratorState{Ea,Eb, Na<: Union{Nothing, Tuple{Ea, <:Any}}, Nb<: Union{Nothing, Tuple{Eb, <:Any}}}
     next_a::Na #Note: Na <: Union{Nothing, Tuple{Ea, Sa}}, where Ea <: AbstractGenomicInterval, and state Sa <: Any
     next_b::Nb #Note: Nb <: Union{Nothing, Tuple{Eb, Sb}}, where Eb <: AbstractGenomicInterval, and state Sb <: Any
     queue::Queue{Union{Ea,Eb}}
@@ -43,7 +43,7 @@ struct OverlapIteratorState{Na,Nb,Ea,Eb}
 end
 
 function OverlapIteratorState{Ea,Eb}(next_a::Na, next_b::Nb, queue::Queue, queue_index::Int) where {Sa, Sb, Ea<:AbstractGenomicInterval, Eb<:AbstractGenomicInterval, Na <: Union{Nothing, Tuple{Ea,Sa}}, Nb <: Union{Nothing, Tuple{Eb,Sb}}}
-    return OverlapIteratorState{Na,Nb,Ea,Eb}(next_a, next_b, queue, queue_index)
+    return OverlapIteratorState{Ea,Eb,Na,Nb}(next_a, next_b, queue, queue_index)
 end
 
 function OverlapIteratorState(E::Type{Tuple{Ea,Eb}}, next_a::Na, next_b::Nb) where {Sa, Sb, Ea<:AbstractGenomicInterval, Eb<:AbstractGenomicInterval, Na <: Union{Nothing, Tuple{Ea,Sa}}, Nb <: Union{Nothing, Tuple{Eb,Sb}}}
@@ -75,7 +75,7 @@ function check_ordered(i1, i2, compare_func)
 end
 
 # Subsequent iteration.
-function Base.iterate(iter::OverlapIterator{A,B,F,G}, state::OverlapIteratorState{Na,Nb,Ea,Eb}) where {A,B,F,G,Na,Nb,Ea,Eb}
+function Base.iterate(iter::OverlapIterator{A,B,F,G}, state::OverlapIteratorState{Ea,Eb,Na,Nb}) where {A,B,F,G,Na,Nb,Ea,Eb}
     next_a      = state.next_a
     next_b      = state.next_b
     queue       = state.queue
