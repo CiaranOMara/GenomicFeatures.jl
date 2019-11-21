@@ -74,16 +74,16 @@ function check_ordered(i1, i2, compare_func)
     return nothing
 end
 
+function Base.iterate(iter::OverlapIterator{A,B,F,G}, state::OverlapIteratorState{Ea,Eb,Nothing,Nb}) where {A,B,F,G,Nb,Ea,Eb}
+    return nothing
+end
+
 # Subsequent iteration.
 function Base.iterate(iter::OverlapIterator{A,B,F,G}, state::OverlapIteratorState{Ea,Eb,Na,Nb}) where {A,B,F,G,Na,Nb,Ea,Eb}
     next_a      = state.next_a
     next_b      = state.next_b
     queue       = state.queue
     queue_index = state.queue_index
-
-    if next_a === nothing
-        return nothing
-    end
 
     interval_a, state_a = next_a
 
