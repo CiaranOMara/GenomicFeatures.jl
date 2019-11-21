@@ -283,6 +283,8 @@ Find a the first interval with matching start and end points.
 Returns that interval, or 'nothing' if no interval was found.
 """
 function Base.findfirst(a::GenomicIntervalCollection{T}, b::AbstractGenomicInterval{S}; filter=true_cmp) where {T,S}
+    #TODO: this function is not tested.
+
     if !haskey(a.trees, seqname(b))
         return nothing
     end
@@ -295,6 +297,8 @@ end
 # --------
 
 function eachoverlap(a::GenomicIntervalCollection{I}, b::AbstractGenomicInterval; filter::F = true_cmp) where {F,I}
+    #TODO: this function is not tested.
+
     if haskey(a.trees, seqname(b))
         return intersect(a.trees[seqname(b)], b)
     end
