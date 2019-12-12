@@ -26,5 +26,6 @@ makedocs(
 )
 deploydocs(
     repo = "github.com/CiaranOMara/GenomicFeatures.jl.git",
-    devbranch = "develop"
+    devbranch = "develop",
+    push_preview = true
 )
