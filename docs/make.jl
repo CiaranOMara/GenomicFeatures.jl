@@ -25,6 +25,6 @@ makedocs(
     authors = replace(join(Pkg.TOML.parsefile("Project.toml")["authors"], ", "), r" <.*?>" => "" ) * ", The BioJulia Organisation, and other contributors."
 )
 deploydocs(
-    repo = "github.com/BioJulia/GenomicFeatures.jl.git",
+    repo = "github.com/CiaranOMara/GenomicFeatures.jl.git",
     devbranch = "develop"
 )
