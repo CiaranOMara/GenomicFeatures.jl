@@ -62,7 +62,7 @@ mutable struct GenomicIntervalCollection{I}
     end
 
     # Bulk insertion.
-    function GenomicIntervalCollection{I}(intervals::AbstractVector{I}, sort::Bool=false) where {I<:AbstractGenomicInterval}
+    function GenomicIntervalCollection{I}(intervals::AbstractVector{I}, sort::Bool=false) where {T, I<:AbstractGenomicInterval{T}}
         if sort
             sort!(intervals)
         else
@@ -91,9 +91,14 @@ function GenomicIntervalCollection(intervals::AbstractVector{I}, sort::Bool=fals
     return GenomicIntervalCollection{I}(intervals, sort)
 end
 
+# Shorthand for metatype specified bulk insertion (backwards compatibility with deprecated IntervalCollection).
+function GenomicIntervalCollection{T}(intervals::AbstractVector{I}, sort::Bool=false) where {T,I<:AbstractGenomicInterval{T}}
+    return GenomicIntervalCollection{I}(intervals, sort)
+end
+
 # Constructor that offers conversion through collection.
-function GenomicIntervalCollection{T}(data, sort::Bool=false) where T
-    return GenomicIntervalCollection(collect(GenomicInterval{T}, data), sort)
+function GenomicIntervalCollection{I}(data, sort::Bool=false) where {T, I<:AbstractGenomicInterval{T}}
+    return GenomicIntervalCollection{I}(collect(I, data), sort)
 end
 
 # Constructor that guesses metadatatype, and offers conversion through collection.
