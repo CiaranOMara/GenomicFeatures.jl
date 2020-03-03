@@ -157,6 +157,13 @@ function Base.:(==)(a::AbstractGenomicInterval{T}, b::AbstractGenomicInterval{T}
            metadata(a)      == metadata(b)
 end
 
+function Base.:(==)(a::AbstractGenomicInterval{<:Base.RefValue{T}}, b::AbstractGenomicInterval{<:Base.RefValue{T}}) where T
+    return seqname(a)       == seqname(b) &&
+           leftposition(a)  == leftposition(b) &&
+           rightposition(a) == rightposition(b) &&
+           metadata(a)[]    == metadata(b)[]
+end
+
 function Base.:(==)(a::GenomicInterval{T}, b::GenomicInterval{T}) where T
     return a.seqname  == b.seqname &&
            a.first    == b.first &&
