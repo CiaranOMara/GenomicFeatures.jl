@@ -92,8 +92,8 @@ function GenomicIntervalCollection(intervals::AbstractVector{I}, sort::Bool=fals
 end
 
 # Shorthand for metatype specified bulk insertion (backwards compatibility with deprecated IntervalCollection).
-function GenomicIntervalCollection{T}(intervals::AbstractVector{I}, sort::Bool=false) where {T,I<:AbstractGenomicInterval{T}}
-    return GenomicIntervalCollection{I}(intervals, sort)
+function GenomicIntervalCollection{T}(data, sort::Bool=false) where {T}
+    return GenomicIntervalCollection{GenomicInterval{T}}(collect(GenomicInterval{T}, data), sort)
 end
 
 # Constructor that offers conversion through collection.
