@@ -49,14 +49,14 @@ function Base.show(io::IO, p::AbstractGenomicPosition)
     end
 end
 
-function Base.show(io::IO, i::GenomicPosition)
+function Base.show(io::IO, p::GenomicPosition)
     if get(io, :compact, false)
-        print(io, i.seqname, ":", i.pos, "  ", i.strand, "  ", i.metadata === nothing ? "nothing" : i.metadata)
+        print(io, seqname(p), ":", position(p), "  ", metadata(p) === nothing ? "nothing" : metadata(p))
     else
-        println(io, summary(i), ':')
-        println(io, "  sequence name: ", i.seqname)
-        println(io, "  position: ", i.pos)
-          print(io, "  metadata: ", i.metadata === nothing ? "nothing" : i.metadata)
+        println(io, summary(p), ':')
+        println(io, "  sequence name: ", seqname(p))
+        println(io, "  position: ", position(p))
+          print(io, "  metadata: ", metadata(p) === nothing ? "nothing" : metadata(p))
     end
 end
 
