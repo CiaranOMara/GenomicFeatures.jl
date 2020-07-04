@@ -3,6 +3,7 @@ name: Run Benchmarks
 on:
   - push
   - pull_request
+  - label
 
 jobs:
   Benchmark:
@@ -19,7 +20,7 @@ jobs:
       - name: Run Benchmarks
         run: julia -e "using BenchmarkCI; BenchmarkCI.judge()"
       - name: Post Results
-        if: ${{ github.event_name == 'pull_request'}}
+        if: ${{ github.event_name == 'label'}}
         run: julia -e "using BenchmarkCI; BenchmarkCI.postjudge()"
       - name: Print Judgement
         run: julia -e 'using BenchmarkCI; BenchmarkCI.displayjudgement()'
