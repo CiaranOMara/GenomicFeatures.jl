@@ -7,13 +7,12 @@ on:
 jobs:
   Benchmark:
     runs-on: ubuntu-latest
-    env:
-      JULIA_DEBUG: BenchmarkCI
     steps:
       - uses: actions/checkout@v2
-      - uses: julia-actions/setup-julia@latest
+      - uses: julia-actions/setup-julia@v1
         with:
           version: 1
+      - uses: julia-actions/julia-buildpkg@v1
       - name: Install Dependencies
         run: julia -e 'using Pkg; pkg"add PkgBenchmark BenchmarkCI@0.1"'
       - name: Run Benchmarks
